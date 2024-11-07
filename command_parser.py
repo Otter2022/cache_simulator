@@ -56,3 +56,40 @@ def parse_commands():
     print(f"Physical Memory Used: {args.phys_mem_used} %")
     print(f"Time Slice: {args.time_slice}")
     print(f"Trace Files: {args.trace_file}")
+    print_input_parameters(args)
+    return args
+
+
+def print_input_parameters(args):
+
+    print("Trace File(s):")
+    for i in args.trace_file:
+        print(f"\t{i}")
+
+    print("\n***** Cache Input Parameters *****\n")
+
+    print(f"{'Cache Size:':<30} {args.cache_size:>10}")
+    print(f"{'Block Size:':<30} {args.block_size:>10}")
+    print(f"{'Associativity:':<30} {args.associativity:>10}")
+    print(f"{'Replacement Policy:':<30} {args.replacement_policy:>10}")
+    print(f"{'Physical Memory:':<30} {args.physical_memory:>10}")
+    print(f"{'Percent Memory Used by System:':<30} {args.phys_mem_used:>10}")
+    print(f"{'Instructions / Time Slice:':<30} {args.time_slice:>10}")
+
+    print()
+    print("\n***** Cache Calculated Values *****")
+    
+    print(f"{'Total # Blocks:':<30} {total_blocks:>10}")
+    print(f"{'Tag Size:':<30} {tag_size:>10} bits")
+    print(f"{'Index Size:':<30} {index_size:>10} bits")
+    print(f"{'Total # Rows:':<30} {total_rows:>10}")
+    print(f"{'Overhead Size:':<30} {overhead_size:>10} bytes")
+    print(f"{'Implementation Memory Size:':<30} {implementation_memory_size_kb:>10.2f} KB")
+    print(f"{'Cost:':<30} ${cost:>10.2f} @ $0.15 per KB")
+
+    print("\n***** Physical Memory Calculated Values *****")
+
+    print(f"{'Number of Physical Pages:':<30} {num_physical_pages:>10}")
+    print(f"{'Number of Pages for System:':<30} {num_pages_for_system:>10}")
+    print(f"{'Size of Page Table Entry:':<30} {size_page_table_entry_bits:>10} bits")
+    print(f"{'Total RAM for Page Table(s):':<30} {total_ram_page_table_bytes:>10.2f} bytes")
