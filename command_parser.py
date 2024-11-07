@@ -84,7 +84,7 @@ def print_input_parameters(args):
     print(f"{'Index Size:':<30} {index_size:>10} bits")
     print(f"{'Total # Rows:':<30} {total_rows:>10}")
     print(f"{'Overhead Size:':<30} {overhead_size:>10} bytes")
-    print(f"{'Implementation Memory Size:':<30} {implementation_memory_size_kb:>10.2f} KB")
+    print(f"{'Implementation Memory Size:':<30} {implementation_memory_size:>10.2f} KB")
     print(f"{'Cost:':<30} ${cost:>10.2f} @ $0.15 per KB")
 
     print("\n***** Physical Memory Calculated Values *****")
