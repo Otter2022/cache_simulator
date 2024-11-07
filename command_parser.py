@@ -48,11 +48,25 @@ def parse_commands():
     if len(args.trace_file) < 1 or len(args.trace_file) > 3:
         parser.error("You must specify between 1 and 3 trace files using '-f'.")
 
-    print(f"Cache Size: {args.cache_size} KB")
-    print(f"Block Size: {args.block_size} bytes")
-    print(f"Associativity: {args.associativity}")
-    print(f"Replacement Policy: {args.replacement_policy}")
-    print(f"Physical Memory: {args.physical_memory} MB")
-    print(f"Physical Memory Used: {args.phys_mem_used} %")
-    print(f"Time Slice: {args.time_slice}")
-    print(f"Trace Files: {args.trace_file}")
+    print_input_parameters(args)
+    return args
+
+
+def print_input_parameters(args):
+
+    print("Trace File(s):")
+    for i in args.trace_file:
+        print(f"\t{i}")
+
+    print("\n***** Cache Input Parameters *****\n")
+
+    print(f"{'Cache Size:':<30} {args.cache_size:>10}")
+    print(f"{'Block Size:':<30} {args.block_size:>10}")
+    print(f"{'Associativity:':<30} {args.associativity:>10}")
+    print(f"{'Replacement Policy:':<30} {args.replacement_policy:>10}")
+    print(f"{'Physical Memory:':<30} {args.physical_memory:>10}")
+    print(f"{'Percent Memory Used by System:':<30} {args.phys_mem_used:>10}")
+    print(f"{'Instructions / Time Slice:':<30} {args.time_slice:>10}")
+
+    print()
+
