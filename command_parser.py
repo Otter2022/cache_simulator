@@ -48,16 +48,6 @@ def parse_commands():
     if len(args.trace_file) < 1 or len(args.trace_file) > 3:
         parser.error("You must specify between 1 and 3 trace files using '-f'.")
 
-<<<<<<< HEAD
-    print(f"Cache Size: {args.cache_size} KB")
-    print(f"Block Size: {args.block_size} bytes")
-    print(f"Associativity: {args.associativity}")
-    print(f"Replacement Policy: {args.replacement_policy}")
-    print(f"Physical Memory: {args.physical_memory} MB")
-    print(f"Physical Memory Used: {args.phys_mem_used} %")
-    print(f"Time Slice: {args.time_slice}")
-    print(f"Trace Files: {args.trace_file}")
-=======
     print_input_parameters(args)
     return args
 
@@ -79,5 +69,19 @@ def print_input_parameters(args):
     print(f"{'Instructions / Time Slice:':<30} {args.time_slice:>10}")
 
     print()
+    print("\n***** Cache Calculated Values *****")
+    
+    print(f"{'Total # Blocks:':<30} {args.total_blocks:>10}")
+    print(f"{'Tag Size:':<30} {args.tag_size:>10} bits")
+    print(f"{'Index Size:':<30} {args.index_size:>10} bits")
+    print(f"{'Total # Rows:':<30} {args.total_rows:>10}")
+    print(f"{'Overhead Size:':<30} {args.overhead_size:>10} bytes")
+    print(f"{'Implementation Memory Size:':<30} {args.implementation_memory_size:>10.2f} KB")
+    print(f"{'Cost:':<30} ${args.cost:>10.2f} @ $0.15 per KB")
 
->>>>>>> OttosBranch
+    print("\n***** Physical Memory Calculated Values *****")
+
+    print(f"{'Number of Physical Pages:':<30} {args.num_physical_pages:>10}")
+    print(f"{'Number of Pages for System:':<30} {args.num_pages_for_system:>10}")
+    print(f"{'Size of Page Table Entry:':<30} {args.size_page_table_entry_bits:>10} bits")
+    print(f"{'Total RAM for Page Table(s):':<30} {args.total_ram_page_table_bytes:>10.2f} bytes")
