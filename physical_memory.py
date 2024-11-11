@@ -1,3 +1,5 @@
+import math
+
 def calculate_physical_memory_parameters(physical_memory_mb, percent_memory_used):
 
     physical_memory_bytes = physical_memory_mb * 1024 * 1024  
