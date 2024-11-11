@@ -82,9 +82,9 @@ def print_input_parameters(args, my_cache):
     print(f"{'Implementation Memory Size:':<30} {my_cache.implementation_memory_size:>10.2f} KB")
     print(f"{'Cost:':<30} ${my_cache.cost:>10.2f} @ $0.15 per KB")
 
-    # print("\n***** Physical Memory Calculated Values *****")
+    print("\n***** Physical Memory Calculated Values *****")
 
-    # print(f"{'Number of Physical Pages:':<30} {.num_physical_pages:>10}")
-    # print(f"{'Number of Pages for System:':<30} {.num_pages_for_system:>10}")
-    # print(f"{'Size of Page Table Entry:':<30} {.size_page_table_entry_bits:>10} bits")
-    # print(f"{'Total RAM for Page Table(s):':<30} {.total_ram_page_table_bytes:>10.2f} bytes")
+    print(f"{'Number of Physical Pages:':<30} {.num_physical_pages:>10}")
+    print(f"{'Number of Pages for System:':<30} {.num_pages_for_system:>10}")
+    print(f"{'Size of Page Table Entry:':<30} {.size_page_table_entry_bits:>10} bits")
+    print(f"{'Total RAM for Page Table(s):':<30} {.total_ram_page_table_bytes:>10.2f} bytes")
