@@ -11,6 +11,7 @@
 
 import argparse
 import cache as csh
+import physical_memory as pm
 
 def parse_replacement_policy(value):
     if value not in ["RR", "RND", "rr", "rnd"]:
@@ -50,12 +51,13 @@ def parse_commands():
         parser.error("You must specify between 1 and 3 trace files using '-f'.")
 
     my_cache = csh.cache(args.cache_size, args.block_size, args.associativity)
+    my_physical_memory = pm.PhysicalMemory(args.physical_memory, args.phys_mem_used)
 
-    print_input_parameters(args, my_cache)
+    print_input_parameters(args, my_cache, my_physical_memory)
     return args, my_cache
 
 
-def print_input_parameters(args, my_cache):
+def print_input_parameters(args, my_cache, my_physical_memory):
 
     print("Trace File(s):")
     for i in args.trace_file:
@@ -84,7 +86,7 @@ def print_input_parameters(args, my_cache):
 
     print("\n***** Physical Memory Calculated Values *****")
 
-    print(f"{'Number of Physical Pages:':<30} {.num_physical_pages:>10}")
-    print(f"{'Number of Pages for System:':<30} {.num_pages_for_system:>10}")
-    print(f"{'Size of Page Table Entry:':<30} {.size_page_table_entry_bits:>10} bits")
-    print(f"{'Total RAM for Page Table(s):':<30} {.total_ram_page_table_bytes:>10.2f} bytes")
+    print(f"{'Number of Physical Pages:':<30} {my_physical_memory.num_physical_pages:>10}")
+    print(f"{'Number of Pages for System:':<30} {my_physical_memory.num_pages_for_system:>10}")
+    print(f"{'Size of Page Table Entry:':<30} {my_physical_memory.size_page_table_entry_bits:>10} bits")
+    print(f"{'Total RAM for Page Table(s):':<30} {my_physical_memory.total_ram_page_table_bytes:>10.2f} bytes")
