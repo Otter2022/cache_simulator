@@ -4,6 +4,8 @@ class cache:
     def __init__(self, cache_size_kb, block_size, associativity):
         # Convert cache size from KB to Bytes
         self.cache_size = cache_size_kb * 1024 
+        self.block_size = block_size
+        self.associativity = associativity
         
         # Total number of blocks and rows
         self.total_blocks = self.cache_size // block_size 
@@ -69,3 +71,4 @@ class cache:
         index = (address >> offset_bits) & ((1 << index_bits) - 1)
         tag = address >> (offset_bits + index_bits)
         return index, tag
+    
