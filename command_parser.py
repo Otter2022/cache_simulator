@@ -10,6 +10,8 @@
 # o Each file will use a “-f “ to specify it 
 
 import argparse
+import cache as csh
+import physical_memory as pm
 
 def parse_replacement_policy(value):
     if value not in ["RR", "RND", "rr", "rnd"]:
@@ -48,11 +50,14 @@ def parse_commands():
     if len(args.trace_file) < 1 or len(args.trace_file) > 3:
         parser.error("You must specify between 1 and 3 trace files using '-f'.")
 
-    print_input_parameters(args)
-    return args
+    my_cache = csh.cache(args.cache_size, args.block_size, args.associativity)
+    my_physical_memory = pm.PhysicalMemory(args.physical_memory, args.phys_mem_used)
+
+    print_input_parameters(args, my_cache, my_physical_memory)
+    return args, my_cache
 
 
-def print_input_parameters(args):
+def print_input_parameters(args, my_cache, my_physical_memory):
 
     print("Trace File(s):")
     for i in args.trace_file:
@@ -69,4 +74,19 @@ def print_input_parameters(args):
     print(f"{'Instructions / Time Slice:':<30} {args.time_slice:>10}")
 
     print()
+    print("\n***** Cache Calculated Values *****")
+    
+    print(f"{'Total # Blocks:':<30} {my_cache.total_blocks:>10}")
+    print(f"{'Tag Size:':<30} {my_cache.tag_size:>10} bits")
+    print(f"{'Index Size:':<30} {my_cache.index_size:>10} bits")
+    print(f"{'Total # Rows:':<30} {my_cache.total_rows:>10}")
+    print(f"{'Overhead Size:':<30} {my_cache.overhead_size:>10} bytes")
+    print(f"{'Implementation Memory Size:':<30} {my_cache.implementation_memory_size:>10.2f} KB")
+    print(f"{'Cost:':<30} ${my_cache.cost:>10.2f} @ $0.15 per KB")
 
+    print("\n***** Physical Memory Calculated Values *****")
+
+    print(f"{'Number of Physical Pages:':<30} {my_physical_memory.num_physical_pages:>10}")
+    print(f"{'Number of Pages for System:':<30} {my_physical_memory.num_pages_for_system:>10}")
+    print(f"{'Size of Page Table Entry:':<30} {my_physical_memory.size_page_table_entry_bits:>10} bits")
+    print(f"{'Total RAM for Page Table(s):':<30} {my_physical_memory.total_ram_page_table_bytes:>10.2f} bytes")
