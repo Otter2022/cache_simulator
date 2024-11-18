@@ -75,6 +75,8 @@ def print_input_parameters(args, my_cache, my_physical_memory):
     print(f"{'Instructions / Time Slice:':<30} {args.time_slice:>10}")
 
     print("\n***** Cache Calculated Values *****\n")
+
+    cost = "$" + f"{my_cache.cost:.2f}"
     
     print(f"{'Total # Blocks:':<30} {my_cache.total_blocks:>10}")
     print(f"{'Tag Size:':<30} {my_cache.tag_size:>10} bits")
@@ -82,7 +84,7 @@ def print_input_parameters(args, my_cache, my_physical_memory):
     print(f"{'Total # Rows:':<30} {my_cache.total_rows:>10}")
     print(f"{'Overhead Size:':<30} {my_cache.overhead_size:>10} bytes")
     print(f"{'Implementation Memory Size:':<30} {my_cache.implementation_memory_size:>10.2f} KB")
-    print(f"{'Cost:':<30} {'$' + "{:.2f}".format(my_cache.cost):>10} @ $0.15 per KB")
+    print(f"{'Cost:':<30} {cost} @ $0.15 per KB")
 
     print("\n***** Physical Memory Calculated Values *****\n")
 
