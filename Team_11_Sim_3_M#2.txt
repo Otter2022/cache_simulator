@@ -1,0 +1,46 @@
+Trace File(s):
+	A-9_new_1.5.pdf.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:                           512
+Block Size:                            64
+Associativity:                         16
+Replacement Policy:                    rr
+Physical Memory:                     4096
+Percent Memory Used by System:         50
+Instructions / Time Slice:              3
+
+***** Cache Calculated Values *****
+
+Total # Blocks:                      8192
+Tag Size:                              17 bits
+Index Size:                             9 bits
+Total # Rows:                         512
+Overhead Size:                    18432.0 bytes
+Implementation Memory Size:        530.00 KB
+Cost:                          $79.50 @ $0.15 per KB
+
+***** Physical Memory Calculated Values *****
+
+Number of Physical Pages:         1048576
+Number of Pages for System:        524288
+Size of Page Table Entry:              19 bits
+Total RAM for Page Table(s):   1245184.00 bytes
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:              183223 (4623 addresses)
+Instruction Bytes:                 367829 SrcDst Bytes:     181352
+Cache Hits:                        178595
+Cache Misses:                        4628
+--- Compulsory Misses:               4623
+--- Conflict Misses:                    5
+
+***** Cache Hit and Miss Rate *****
+
+Hit Rate:                         97.4741%
+Miss Rate:                         2.5259%
+CPI:                                 3.52 Cycles/Instruction (323357)
+Unused Cache Space:            232.20 KB / 530.00 KB = 43.81% Waste: $34.83
+Unused Cache Blocks:           3589 / 8192

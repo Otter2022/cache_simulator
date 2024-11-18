@@ -98,12 +98,26 @@ if __name__ == "__main__":
     total_cycles = (total_instructions * base_cpi) + (total_cache_misses * miss_penalty)
     overall_cpi = total_cycles / total_instructions if total_instructions > 0 else 0
 
-    # Calculate Unused Cache Space and Waste
-    unused_blocks = my_cache.total_blocks - len(my_cache.used_blocks)
+    # Calculate the number of used cache blocks
+    used_cache_blocks = my_cache.get_used_cache_blocks()
+    unused_blocks = my_cache.total_blocks - used_cache_blocks
+
+    # Ensure unused_blocks is not negative
+    unused_blocks = max(unused_blocks, 0)
+
+    # Overhead per block in bytes (assuming valid bit + tag bits)
     overhead_per_block_bytes = (my_cache.tag_size + 1) / 8  # Convert bits to bytes
+
+    # Unused Cache Space in bytes
     unused_cache_space_bytes = unused_blocks * (my_cache.block_size + overhead_per_block_bytes)
+
+    # Unused Cache Space in KB
     unused_cache_space_kb = unused_cache_space_bytes / 1024
+
+    # Percentage waste
     percentage_waste = (unused_cache_space_kb / my_cache.implementation_memory_size) * 100
+
+    # Waste Cost
     waste_cost = unused_cache_space_kb * my_cache.cost_per_kb
 
     # Print overall statistics

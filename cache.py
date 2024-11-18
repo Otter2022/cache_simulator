@@ -72,3 +72,8 @@ class cache:
         tag = address >> (offset_bits + index_bits)
         return index, tag
     
+    def get_used_cache_blocks(self):
+        used_cache_blocks = 0
+        for cache_set in self.cache:
+            used_cache_blocks += len(cache_set)
+        return used_cache_blocks
