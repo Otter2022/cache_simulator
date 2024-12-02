@@ -92,3 +92,10 @@ def print_input_parameters(args, my_cache, my_physical_memory):
     print(f"{'Number of Pages for System:':<30} {my_physical_memory.num_pages_for_system:>10}")
     print(f"{'Size of Page Table Entry:':<30} {my_physical_memory.size_page_table_entry_bits:>10} bits")
     print(f"{'Total RAM for Page Table(s):':<30} {my_physical_memory.total_ram_page_table_bytes:>10.2f} bytes")
+
+    print("***** PHYSICAL MEMORY SIMULATION RESULTS *****")
+    print()
+    print(f"{'Phyiscal Pages Used By SYSTEM':<30} {my_physical_memory.num_pages_for_system:>10}")
+    print(f"{'Page:':<30} {my_cache.overhead_size:>10}")
+    print()
+    print(f"{'Virtual Pages Mapped':<30}")
