@@ -1,17 +1,18 @@
 from collections import deque
+
 class PageTable:
     def __init__(self, physical_page_count):
         self.physical_page_count = physical_page_count
         self.page_table = {}  # Maps virtual page numbers to physical page numbers
-        self.page_table_mapped = set()  # Track unique virtual pages mapped
-        self.lru_queue = deque()  # Tracks the order of access for LRU replacement
+        self.page_table_mapped = set()  # Set to track unique virtual pages mapped
+        self.lru_queue = deque()  # For LRU replacement
         self.stats = {
             "virtual_pages_mapped": 0,
             "page_table_hits": 0,
             "pages_from_free": 0,
             "total_page_faults": 0,
         }
-        self._next_physical_page = 0  # Track next available physical page
+        self._next_physical_page = 0  # Next available physical page
 
     def access_page(self, virtual_page):
         if virtual_page in self.page_table:
@@ -21,9 +22,9 @@ class PageTable:
         else:
             # Page table miss
             if virtual_page not in self.page_table_mapped:
+                # First time mapping this virtual page
                 self.stats["virtual_pages_mapped"] += 1
                 self.page_table_mapped.add(virtual_page)
-
             if len(self.page_table) < self.physical_page_count:
                 # Map to a free physical page
                 self.stats["pages_from_free"] += 1
@@ -39,20 +40,15 @@ class PageTable:
         self.lru_queue.append(virtual_page)
 
     def _map_page(self, virtual_page):
-        if self._next_physical_page < self.physical_page_count:
-            physical_page = self._next_physical_page
-            self._next_physical_page += 1
-        else:
-            raise RuntimeError("Attempting to map page when all pages should be handled by replacement.")
-        
+        physical_page = self._next_physical_page
         self.page_table[virtual_page] = physical_page
+        self._next_physical_page += 1
         self.lru_queue.append(virtual_page)
 
     def _replace_page(self, virtual_page):
         evicted_virtual_page = self.lru_queue.popleft()
         physical_page = self.page_table[evicted_virtual_page]
         del self.page_table[evicted_virtual_page]
-        
         self.page_table[virtual_page] = physical_page
         self.lru_queue.append(virtual_page)
 

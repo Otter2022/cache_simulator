@@ -16,17 +16,17 @@ class cache:
         self.offset_size = int(math.log2(block_size)) if block_size > 0 else 0 
         self.address_size = 32  # Assuming 32-bit address space
         self.tag_size = self.address_size - self.index_size - self.offset_size 
-
+    
         # Calculate overhead size 
-        self.overhead_size = (self.total_rows * self.tag_size * associativity + self.total_blocks) / 8 
+        self.overhead_size = (self.total_rows * self.tag_size * associativity + self.total_blocks) / 8  # in bytes
         
         # Implementation Memory Size (in KB)
-        self.implementation_memory_size = (self.cache_size + self.overhead_size) / 1024  
+        self.implementation_memory_size = (self.cache_size + self.overhead_size) / 1024  # in KB
         
         # Calculate costs
         self.cost_per_kb = 0.15  
         self.cost = self.implementation_memory_size * self.cost_per_kb 
-
+    
         self.cache = [{} for _ in range(self.total_rows)]  # Each row is a dictionary for associativity
         self.access_count = 0
         self.hit_count = 0
@@ -34,12 +34,12 @@ class cache:
         self.compulsory_misses = 0
         self.conflict_misses = 0
         self.used_blocks = set()  # For tracking compulsory misses
-
+    
     def access(self, address):
         self.access_count += 1
         index, tag = self.get_index_and_tag(address)
         cache_set = self.cache[index]
-
+    
         # Check for hit
         if tag in cache_set:
             self.hit_count += 1
@@ -54,7 +54,7 @@ class cache:
                 self.used_blocks.add(block_address)
             else:
                 self.conflict_misses += 1
-
+    
             # Handle cache replacement
             if len(cache_set) < self.associativity:
                 cache_set[tag] = {'valid': True}
@@ -63,7 +63,7 @@ class cache:
                 evicted_tag = next(iter(cache_set))
                 del cache_set[evicted_tag]
                 cache_set[tag] = {'valid': True}
-
+    
     def get_index_and_tag(self, address):
         offset_bits = self.offset_size
         index_bits = self.index_size
@@ -71,7 +71,7 @@ class cache:
         index = (address >> offset_bits) & ((1 << index_bits) - 1)
         tag = address >> (offset_bits + index_bits)
         return index, tag
-    
+        
     def get_used_cache_blocks(self):
         used_cache_blocks = 0
         for cache_set in self.cache:

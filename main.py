@@ -1,9 +1,7 @@
 import sys
 import command_parser
-import physical_memory
-import virtual_memory
 import re
-
+import virtual_memory
 
 class PageTable:
     def __init__(self, physical_page_count):
@@ -47,7 +45,8 @@ class PageTable:
         Updates the LRU queue for a page access.
         :param virtual_page: The virtual page being accessed.
         """
-        self.lru_queue.remove(virtual_page)
+        if virtual_page in self.lru_queue:
+            self.lru_queue.remove(virtual_page)
         self.lru_queue.append(virtual_page)
 
     def _map_page(self, virtual_page):
@@ -91,7 +90,7 @@ class PageTable:
         }
 
 
-def process_trace_file(trace_file_path, my_cache, page_table):
+def process_trace_file(trace_file_path, my_cache, page_table, page_size):
     """
     Processes a trace file to simulate memory and cache accesses while updating page table stats.
     """
@@ -106,7 +105,7 @@ def process_trace_file(trace_file_path, my_cache, page_table):
     # Simulate Memory Accesses
     for access in memory_accesses:
         address = access['address']
-        virtual_page = address // my_cache.block_size  # Determine virtual page
+        virtual_page = address // page_size  # Use page_size for virtual page calculation
         page_table.access_page(virtual_page)  # Simulate page table access
 
         if access['type'] == 'instruction':
@@ -131,14 +130,15 @@ def process_trace_file(trace_file_path, my_cache, page_table):
 
 
 if __name__ == "__main__":
-    args, my_cache, my_physical_memory = command_parser.parse_commands()
+    args, my_cache, my_physical_memory, page_size = command_parser.parse_commands()
 
-    # Dynamically calculate physical_page_count based on provided arguments
-    block_size = my_cache.block_size  # Get block size from cache setup
-    physical_memory_size = args.physical_memory * 1024  # Convert KB to bytes
-    physical_page_count = physical_memory_size // block_size  # Calculate total physical pages
+    # Correct physical_memory_size conversion
+    physical_memory_size = args.physical_memory * 1024 * 1024  # Convert MB to bytes
 
-    # Initialize PageTable
+    # Calculate physical page count using page size
+    physical_page_count = physical_memory_size // page_size  # Calculate total physical pages
+
+    # Initialize PageTable with correct physical page count
     page_table = PageTable(physical_page_count)
 
     # Overall counters
@@ -147,7 +147,7 @@ if __name__ == "__main__":
 
     for trace_file in args.trace_file:
         # Process each trace file
-        stats = process_trace_file(trace_file, my_cache, page_table)
+        stats = process_trace_file(trace_file, my_cache, page_table, page_size)
 
         # Update overall counters
         total_instruction_bytes += stats['instruction_bytes']

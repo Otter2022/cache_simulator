@@ -55,4 +55,4 @@ class TraceParser:
             if src_address != 0:
                 data_accesses.append({'type': 'data_read', 'address': src_address, 'length': 4})
 
-        return data_accesses
+        return data_accesses 
